@@ -17,7 +17,7 @@ import logging
 import time
 import os
 import sys
-
+import fauxmoconfig
 from debounce_handler import debounce_handler
 
 logging.basicConfig(level=logging.DEBUG, filename="/var/log/example-minimal.py",
@@ -30,34 +30,22 @@ class device_handler(debounce_handler):
     """
     TRIGGERS = {"TV": 52000, "Light" : 53000}
 
-    def __init__(self, name, port):
+    def __init__(self, name, port, on_command, off_command):
         super(device_handler, self).__init__()
         self.name = name
         self.port = port
+	self.on_command = on_command
+	self.off_command = off_command
 
     def act(self, client_address, state):
-        if self.name == "TV":
-            os.system("irsend SEND_ONCE SAMSUNG55 KEY_POWER");
+        if state == True:
+	    os.system(self.on_command)
             print "State", state, "from client @", client_address
             return True
-        if self.name == "Light" and state == True:
-            os.system("/home/pi/gitclone/echo/echo-master/lightson.sh")
-            print "Turning light on"
-            return True
-        if self.name == "Light" and state == False:
-            os.system("/home/pi/gitclone/echo/echo-master/lightsoff.sh")
-            print "Turning light off"
-            return True
-        if self.name == "Living" and state == True:
-            os.system("/home/pi/gitclone/echo/echo-master/lightson.sh")
-            os.system("irsend SEND_ONCE SAMSUNG55 KEY_POWER");
-            print "Turning light on"
-            return True
-        if self.name == "Living" and state == False:
-            os.system("/home/pi/gitclone/echo/echo-master/lightsoff.sh")
-            os.system("irsend SEND_ONCE SAMSUNG55 KEY_POWER");
-            print "Turning light off"
-            return True
+	if state == False:
+	    os.system(self.off_command)
+	    print "State", state, "from client @", client_address
+	    return True
         
 if __name__ == "__main__":
     # Startup the fauxmo server
@@ -65,6 +53,7 @@ if __name__ == "__main__":
     fauxmo.DEBUG = True
     p = fauxmo.poller()
     u = fauxmo.upnp_broadcast_responder()
+    configuration = fauxmoconfig.fauxmoconfig("/home/pi/gitclone/echo/echo-master/config.json")
     print("About to initialize socket")
     u.init_socket()
     p.add(u)
@@ -73,12 +62,14 @@ if __name__ == "__main__":
     # Register the device callback as a fauxmo handler
     # d = device_handler()
     print("Registering the device Call Back ")
-    tv = device_handler("TV", 53000)
-    lights = device_handler("Light", 54000)
-    living = device_handler("Living", 55000)
-    fauxmo.fauxmo("TV", u, p, None, 53000, tv)
-    fauxmo.fauxmo("Light", u, p, None, 54000, lights)
-    fauxmo.fauxmo("Living", u, p, None, 55000, living)
+    for device in configuration.devices:
+	handler = device_handler(device["name"], device["port"], device["on_cmd"], device["off_cmd"])
+	fauxmo.fauxmo(device["name"], u, p, None, device["port"], handler)
+    #tv = device_handler("TV", 53000, "irsend SEND_ONCE SAMSUNG55 KEY_POWER", "irsend SEND_ONCE SAMSUNG55 KEY_POWER")
+    #lights = device_handler("Light", 54000, "/home/pi/gitclone/echo/echo-master/lightson.sh", "/home/pi/gitclone/echo/echo-master/lightsoff.sh")
+    
+    #fauxmo.fauxmo("TV", u, p, None, 53000, tv)
+    #fauxmo.fauxmo("Light", u, p, None, 54000, lights)
     
     #for trig, port in d.TRIGGERS.items():
     #    fauxmo.fauxmo(trig, u, p, None, port, d)

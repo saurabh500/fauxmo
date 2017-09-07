@@ -1,0 +1,28 @@
+{
+    "FAUXMO": {
+        "ip_address": "auto"
+    },
+    "DEVICES": [
+                {
+                    "port": 53000,
+		    "on_cmd": "/home/pi/gitclone/echo/echo-master/lightson.sh",
+                    "off_cmd": "/home/pi/gitclone/echo/echo-master/lightsoff.sh",
+                    "plugin": "cmdline",
+                    "name": "Light"
+                },
+		{
+                    "port": 54000,
+                    "on_cmd": "/home/pi/gitclone/echo/echo-master/fanon.sh",
+                    "off_cmd": "/home/pi/gitclone/echo/echo-master/fanoff.sh",
+                    "plugin": "cmdline",
+                    "name": "Fan"
+                },
+		{
+                    "port": 55000,
+                    "on_cmd": "irsend SEND_ONCE SAMSUNG55 KEY_POWER",
+                    "off_cmd": "irsend SEND_ONCE SAMSUNG55 KEY_POWER",
+                    "plugin": "cmdline",
+                    "name": "TV"
+                }
+     ]
+}
