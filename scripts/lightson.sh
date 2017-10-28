@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/home/pi/rfoutlet/codesend 5576451
+codesend 5576451
 

@@ -1,5 +1,5 @@
 #!/bin/sh
 
-/home/pi/rfoutlet/codesend 5576460
+codesend 5576460
 
 

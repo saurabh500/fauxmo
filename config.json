@@ -5,8 +5,8 @@
     "DEVICES": [
                 {
                     "port": 53000,
-		    "on_cmd": "/home/pi/rfoutlet/scripts/lightson.sh",
-                    "off_cmd": "/home/pi/rfoutlet/scripts/lightsoff.sh",
+		    "on_cmd": "/home/pi/fauxmo/scripts/lightson.sh",
+                    "off_cmd": "/home/pi/fauxmo/scripts/lightsoff.sh",
                     "plugin": "cmdline",
                     "name": "Light"
                 },

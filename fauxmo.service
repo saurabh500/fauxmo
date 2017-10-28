@@ -3,7 +3,6 @@ Description=Echo Discovery Service
 
 [Service]
 ExecStart=/home/pi/fauxmo/example-minimal.py
-StandardOutput=null
 
 [Install]
 WantedBy=multi-user.target
