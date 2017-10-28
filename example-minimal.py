@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ fauxmo_minimal.py - Fabricate.IO
 
     This is a demo python file showing what can be done with the debounce_handler.
@@ -53,7 +54,7 @@ if __name__ == "__main__":
     fauxmo.DEBUG = True
     p = fauxmo.poller()
     u = fauxmo.upnp_broadcast_responder()
-    configuration = fauxmoconfig.fauxmoconfig("/home/pi/gitclone/echo/echo-master/config.json")
+    configuration = fauxmoconfig.fauxmoconfig("/home/pi/fauxmo/config.json")
     print("About to initialize socket")
     u.init_socket()
     p.add(u)

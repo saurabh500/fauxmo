@@ -5,8 +5,8 @@
     "DEVICES": [
                 {
                     "port": 53000,
-		    "on_cmd": "/home/pi/gitclone/echo/echo-master/lightson.sh",
-                    "off_cmd": "/home/pi/gitclone/echo/echo-master/lightsoff.sh",
+		    "on_cmd": "/home/pi/rfoutlet/scripts/lightson.sh",
+                    "off_cmd": "/home/pi/rfoutlet/scripts/lightsoff.sh",
                     "plugin": "cmdline",
                     "name": "Light"
                 },
