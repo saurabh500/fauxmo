@@ -19,6 +19,7 @@ import time
 import os
 import sys
 import fauxmoconfig
+import argparse
 from debounce_handler import debounce_handler
 
 logging.basicConfig(level=logging.DEBUG, filename="/var/log/example-minimal.py",
@@ -47,8 +48,18 @@ class device_handler(debounce_handler):
 	    os.system(self.off_command)
 	    print "State", state, "from client @", client_address
 	    return True
-        
+
+def parse_command_line():
+    parser = argparse.ArgumentParser(description='Pass parameters for fauxmo')
+    parser.add_argument('--test', default=False, const=True, action='store_const', help="Pass as a parameter if the service should be run in test mode")
+    parser.add_argument('--config', default="/home/pi/fauxmo/config.json", help="Specify the path of the config file")
+    arguments = parser.parse_args()
+    return arguments
+
 if __name__ == "__main__":
+    # Parse command line arguments 
+    arguments = parse_command_line()
+    isTestMode = arguments.test
     # Startup the fauxmo server
     print("Starting the server")
     fauxmo.DEBUG = True
@@ -66,16 +77,7 @@ if __name__ == "__main__":
     for device in configuration.devices:
 	handler = device_handler(device["name"], device["port"], device["on_cmd"], device["off_cmd"])
 	fauxmo.fauxmo(device["name"], u, p, None, device["port"], handler)
-    #tv = device_handler("TV", 53000, "irsend SEND_ONCE SAMSUNG55 KEY_POWER", "irsend SEND_ONCE SAMSUNG55 KEY_POWER")
-    #lights = device_handler("Light", 54000, "/home/pi/gitclone/echo/echo-master/lightson.sh", "/home/pi/gitclone/echo/echo-master/lightsoff.sh")
-    
-    #fauxmo.fauxmo("TV", u, p, None, 53000, tv)
-    #fauxmo.fauxmo("Light", u, p, None, 54000, lights)
-    
-    #for trig, port in d.TRIGGERS.items():
-    #    fauxmo.fauxmo(trig, u, p, None, port, d)
 
-    # Loop and poll for incoming Echo requests
     logging.debug("Entering fauxmo polling loop")
     print("Entering the faxmo polling loop")
     while True:
@@ -83,6 +85,8 @@ if __name__ == "__main__":
             # Allow time for a ctrl-c to stop the process
 	    p.poll(100)
             time.sleep(0.1)
+	    if isTestMode : 
+		break;
         except Exception, e:
             logging.critical("Critical exception: " + str(e))
 	    logging.debug("Exception encountered " + str(e))
