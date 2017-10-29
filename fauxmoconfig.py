@@ -13,5 +13,5 @@ class fauxmoconfig():
 			print(device)
 
 if __name__ == "__main__":
-	fauxmoconfiguration = fauxmoconfig("config.json")
+	fauxmoconfiguration = fauxmoconfig(os.path.realpath("config.json"))
 	pprint(fauxmoconfiguration.devices)

@@ -22,8 +22,8 @@ import fauxmoconfig
 import argparse
 from debounce_handler import debounce_handler
 
-logging.basicConfig(level=logging.DEBUG, filename="/var/log/example-minimal.py",
-	format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+#logging.basicConfig(level=logging.DEBUG, filename="/var/log/example-minimal.py",
+#	format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 
 class device_handler(debounce_handler):
@@ -60,12 +60,17 @@ if __name__ == "__main__":
     # Parse command line arguments 
     arguments = parse_command_line()
     isTestMode = arguments.test
+    logFileName = "/var/log/fauxmo.log"
+    if isTestMode : 
+	logFileName = "./test.log"
+    logging.basicConfig(level=logging.DEBUG, filename=logFileName, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
     # Startup the fauxmo server
     print("Starting the server")
     fauxmo.DEBUG = True
     p = fauxmo.poller()
     u = fauxmo.upnp_broadcast_responder()
-    configuration = fauxmoconfig.fauxmoconfig("/home/pi/fauxmo/config.json")
+    configuration = fauxmoconfig.fauxmoconfig(os.path.realpath("config.json"))
     print("About to initialize socket")
     u.init_socket()
     p.add(u)
