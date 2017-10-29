@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/saurabh500/fauxmo.svg?branch=master)](https://travis-ci.org/saurabh500/fauxmo)
+
 # echo
 For controlling local devices with the Amazon Echo.
 
