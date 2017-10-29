@@ -62,7 +62,7 @@ if __name__ == "__main__":
     isTestMode = arguments.test
     logFileName = "/var/log/fauxmo.log"
     if isTestMode : 
-	logFileName = "/dev/null"
+	logFileName = "./test.log"
     logging.basicConfig(level=logging.DEBUG, filename=logFileName, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
     # Startup the fauxmo server
