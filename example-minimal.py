@@ -70,7 +70,7 @@ if __name__ == "__main__":
     fauxmo.DEBUG = True
     p = fauxmo.poller()
     u = fauxmo.upnp_broadcast_responder()
-    configuration = fauxmoconfig.fauxmoconfig("/home/pi/fauxmo/config.json")
+    configuration = fauxmoconfig.fauxmoconfig(os.path.realpath("config.json"))
     print("About to initialize socket")
     u.init_socket()
     p.add(u)
