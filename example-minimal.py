@@ -58,6 +58,7 @@ def parse_command_line():
 
 if __name__ == "__main__":
     # Parse command line arguments 
+    dirname = os.path.dirname( __file__)
     arguments = parse_command_line()
     isTestMode = arguments.test
     logFileName = "/var/log/fauxmo.log"
@@ -70,7 +71,7 @@ if __name__ == "__main__":
     fauxmo.DEBUG = True
     p = fauxmo.poller()
     u = fauxmo.upnp_broadcast_responder()
-    configuration = fauxmoconfig.fauxmoconfig(os.path.realpath("config.json"))
+    configuration = fauxmoconfig.fauxmoconfig(os.path.join(dirname, "config.json"))
     print("About to initialize socket")
     u.init_socket()
     p.add(u)

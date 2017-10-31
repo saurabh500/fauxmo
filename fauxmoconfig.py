@@ -1,9 +1,11 @@
 import json 
+import logging
 from pprint import pprint
 
 
 class fauxmoconfig():
 	def __init__(self, filename):
+		logging.debug("Loading log from " + filename)
 		with open(filename) as configuration:
 			self.configuration = json.load(configuration)
 		# Get all DEVICES node
