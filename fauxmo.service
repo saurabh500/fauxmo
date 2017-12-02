@@ -1,8 +1,11 @@
 [Unit]
 Description=Echo Discovery Service
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 ExecStart=/home/pi/fauxmo/example-minimal.py
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
