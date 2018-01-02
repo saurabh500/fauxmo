@@ -12,7 +12,7 @@ class fauxmoconfig():
 		self.devices = self.configuration['DEVICES']
 		# Create a list of fauxmo 
 		for device in self.devices:
-			print(device)
+			logging.debug(device)
 
 if __name__ == "__main__":
 	fauxmoconfiguration = fauxmoconfig(os.path.realpath("config.json"))

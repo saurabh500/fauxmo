@@ -10,19 +10,13 @@
                     "plugin": "cmdline",
                     "name": "Light"
                 },
-		{
-                    "port": 54000,
-                    "on_cmd": "/home/pi/gitclone/echo/echo-master/fanon.sh",
-                    "off_cmd": "/home/pi/gitclone/echo/echo-master/fanoff.sh",
+	        {
+                    "port": 53010,
+                    "on_cmd": "/home/pi/fauxmo/scripts/studyon.sh",
+                    "off_cmd": "/home/pi/fauxmo/scripts/studyoff.sh",
                     "plugin": "cmdline",
-                    "name": "Fan"
-                },
-		{
-                    "port": 55000,
-                    "on_cmd": "irsend SEND_ONCE SAMSUNG55 KEY_POWER",
-                    "off_cmd": "irsend SEND_ONCE SAMSUNG55 KEY_POWER",
-                    "plugin": "cmdline",
-                    "name": "TV"
+                    "name": "Study"
                 }
+
      ]
 }
